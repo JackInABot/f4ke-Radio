@@ -44,6 +44,7 @@ def PreviousStationEvent(event):
     PreviousStation()
 
 def NextStation():
+    global CURRENT_STATION
     next_station = CURRENT_STATION + 1
     #check if last in list
     stations_len = len(STATIONS)
@@ -58,6 +59,7 @@ def NextStation():
     _PlayStation(next_station)
 
 def PreviousStation():
+    global CURRENT_STATION
     previous_station = CURRENT_STATION - 1
     #check if last in list
     stations_len = len(STATIONS)
@@ -85,7 +87,7 @@ def _PlayStation(stationId):
     #get and assemble Host After Break talk
     station_HostAfterBreak_list = utilities.AssembleRadioElements(station_dir, directoryHelper.STATION_HOST_AFTER_BREAK_FOLDER, scrambleList)
     #mix up the radio station elements if applicable
-    RADIO_ELEMENT_LIST = utilities.MixRadioElements(station_tracks_list, station_ads_list, station_HostBeforeBreak_list, station_HostAfterBreak_list, TracksSectionSize, AdsSectionSize)
+    RADIO_ELEMENT_LIST = utilities.MixRadioElements(station_tracks_list, station_ads_list, station_HostBeforeBreak_list, station_HostAfterBreak_list, TracksSectionSize, AdsSectionSize, IncludeAdBreaks)
     #randomize where in the list we are
     CURRENT_ELEMENT = utilities.RandomizeNumber(len(RADIO_ELEMENT_LIST) -1)
 

@@ -38,7 +38,7 @@ def scramble(orig):
 def isDuplicate(s):
     return bool(re.search(r'\(\d+\)', s))
 
-def MixRadioElements(tracks, ads, hostBeforeBreak, hostAfterBreak, TracksSectionSize, AdsSectionSize):
+def MixRadioElements(tracks, ads, hostBeforeBreak, hostAfterBreak, TracksSectionSize, AdsSectionSize, IncludeAdBreaks):
     #VARS
     station_mixed_list = []
 
@@ -62,24 +62,25 @@ def MixRadioElements(tracks, ads, hostBeforeBreak, hostAfterBreak, TracksSection
             if not tracks:
                 break
         
-        #add host talk before ad break
-        if not temp_hostBeforeBreak_list: temp_hostBeforeBreak_list = hostBeforeBreak.copy()
-        if temp_hostBeforeBreak_list: #this enables folders to be empty if needed
-            station_mixed_list.append(temp_hostBeforeBreak_list[0])
-            temp_hostBeforeBreak_list.remove(temp_hostBeforeBreak_list[0])
-        #add the list ads
-        if temp_ads_list: #this enables folders to be empty
-            for i in range(0, AdsSectionSize):
-                station_mixed_list.append(temp_ads_list[0])
-                #if(len(temp_ads_list) == 1):
-                temp_ads_list.remove(temp_ads_list[0])
-                # else:
-                #     temp_ads_list.remove(temp_ads_list[i])
-                if not temp_ads_list: temp_ads_list = ads.copy() #if temp ads is empty, replenish it
-        #add host talk after ad break
-        if not temp_hostAfterBreak_list: temp_hostAfterBreak_list = hostAfterBreak.copy()
-        if temp_hostAfterBreak_list: #this enables folders to be empty
-            station_mixed_list.append(temp_hostAfterBreak_list[0])
-            temp_hostAfterBreak_list.remove(temp_hostAfterBreak_list[0])
+        if(IncludeAdBreaks):
+            #add host talk before ad break
+            if not temp_hostBeforeBreak_list: temp_hostBeforeBreak_list = hostBeforeBreak.copy()
+            if temp_hostBeforeBreak_list: #this enables folders to be empty if needed
+                station_mixed_list.append(temp_hostBeforeBreak_list[0])
+                temp_hostBeforeBreak_list.remove(temp_hostBeforeBreak_list[0])
+            #add the list ads
+            if temp_ads_list: #this enables folders to be empty
+                for i in range(0, AdsSectionSize):
+                    station_mixed_list.append(temp_ads_list[0])
+                    #if(len(temp_ads_list) == 1):
+                    temp_ads_list.remove(temp_ads_list[0])
+                    # else:
+                    #     temp_ads_list.remove(temp_ads_list[i])
+                    if not temp_ads_list: temp_ads_list = ads.copy() #if temp ads is empty, replenish it
+            #add host talk after ad break
+            if not temp_hostAfterBreak_list: temp_hostAfterBreak_list = hostAfterBreak.copy()
+            if temp_hostAfterBreak_list: #this enables folders to be empty
+                station_mixed_list.append(temp_hostAfterBreak_list[0])
+                temp_hostAfterBreak_list.remove(temp_hostAfterBreak_list[0])
 
     return station_mixed_list
