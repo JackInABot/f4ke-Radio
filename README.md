@@ -15,6 +15,8 @@ Okay I’ll run you through how to do everything.
 
 ### Running the program 
 
+RUN `main.py` just double click that $#!T
+
 #### Prerequisites:  
 
 You must have at least one radio show in the `RADIO_STATIONS` directory. 
