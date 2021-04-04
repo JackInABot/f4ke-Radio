@@ -58,4 +58,4 @@ The file `settings.json` needs to have appropriate settings inside like so:
 }`
 
 ### Deleting a radio station
-Just delete the folder
+Just delete the folder inside `RADIO_STATIONS` that you dont want anymore or I guess you could just move that folder elsewhere if you're too scared to delete it
