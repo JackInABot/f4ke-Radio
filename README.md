@@ -57,16 +57,8 @@ The folder `Tracks` needs at least 1 mp3 file inside.
 
 The file `settings.json` needs to have appropriate settings inside like so: 
 
-` 
-
-{ 
-
+`{
     "TracksSectionSize":4, 
-
     "AdsSectionSize":0, 
-
     "IncludeAdBreaks": false 
-
-} 
-
-` 
+}`
