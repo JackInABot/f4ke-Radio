@@ -43,22 +43,19 @@ Go to the `RADIO_STATIONS` directory and make a new folder. The name of the fold
 
 All radio station folders inside `RADIO_STATIONS` directory must have the following inside them: 
 
-Folder named `HostAfterBreak` 
-
-Folder named `HostBeforeBreak` 
-
-Folder named `Tracks` 
-
-File named `settings.json` 
+- Folder named `HostAfterBreak` 
+- Folder named `HostBeforeBreak` 
+- Folder named `Tracks` 
+- File named `settings.json` 
 
 The folders `HostAfterBreak`,`HostBeforeBreak`can be blank. 
-
 The folder `Tracks` needs at least 1 mp3 file inside. 
-
 The file `settings.json` needs to have appropriate settings inside like so: 
-
 `{
     "TracksSectionSize":4, 
     "AdsSectionSize":0, 
     "IncludeAdBreaks": false 
 }`
+
+### Deleting a radio station
+Just delete the folder
