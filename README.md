@@ -16,6 +16,7 @@ Okay I’ll run you through how to do everything.
 ### Running the program 
 
 RUN `main.py` just double click that $#!T
+Create a shortcut if you want and place it on your dasktop / taskbar
 
 #### Prerequisites:  
 
