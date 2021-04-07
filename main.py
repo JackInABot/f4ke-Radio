@@ -5,7 +5,7 @@ import tkinter as tk
 
 import DirectoryHelper as directoryHelper
 import SettingsHelper as settingsHelper
-import Utilities as utilities
+import StringHelper as stringHelper
 
 #MAIN
 pygame.init() #turn all of pygame on.
@@ -17,7 +17,7 @@ RADIO_ELEMENT_LIST = []
 CURRENT_ELEMENT = 0
 CURRENT_STATION = 0
 CURRENT_VOLUME = 0.7 #70% volume default
-
+Just_Tuned_In = True
 
 TracksSectionSize = 4 #How many tracks play until an ad break
 AdsSectionSize = 2 #How many ads play until return to tracks
@@ -83,29 +83,41 @@ def _assembleRadioElements(stationId):
     station_dir = os.path.join(directoryHelper.RADIO_STATIONS_FOLDER, STATIONS[stationId])
     scrambleList = True
     #get and assemble track paths
-    station_tracks_list = utilities.AssembleRadioElements(station_dir, directoryHelper.STATION_TRACKS_FOLDER, scrambleList)
+    station_tracks_list = stringHelper.AssembleRadioElements(station_dir, directoryHelper.STATION_TRACKS_FOLDER, scrambleList)
     #get and assemble ad paths
-    station_ads_list = utilities.GetAdverts(scrambleList)
+    station_ads_list = stringHelper.GetAdverts(scrambleList)
     #get and assemble Host Before Break talk
-    station_HostBeforeBreak_list = utilities.AssembleRadioElements(station_dir, directoryHelper.STATION_HOST_BEFORE_BREAK_FOLDER, scrambleList)
+    station_HostBeforeBreak_list = stringHelper.AssembleRadioElements(station_dir, directoryHelper.STATION_HOST_BEFORE_BREAK_FOLDER, scrambleList)
     #get and assemble Host After Break talk
-    station_HostAfterBreak_list = utilities.AssembleRadioElements(station_dir, directoryHelper.STATION_HOST_AFTER_BREAK_FOLDER, scrambleList)
+    station_HostAfterBreak_list = stringHelper.AssembleRadioElements(station_dir, directoryHelper.STATION_HOST_AFTER_BREAK_FOLDER, scrambleList)
     #mix up the radio station elements if applicable
-    RADIO_ELEMENT_LIST = utilities.MixRadioElements(station_tracks_list, station_ads_list, station_HostBeforeBreak_list, station_HostAfterBreak_list, TracksSectionSize, AdsSectionSize, IncludeAdBreaks)
+    RADIO_ELEMENT_LIST = stringHelper.MixRadioElements(station_tracks_list, station_ads_list, station_HostBeforeBreak_list, station_HostAfterBreak_list, TracksSectionSize, AdsSectionSize, IncludeAdBreaks)
     #randomize where in the list we are
-    CURRENT_ELEMENT = utilities.RandomizeNumber(len(RADIO_ELEMENT_LIST) -1)
+    CURRENT_ELEMENT = stringHelper.RandomizeNumber(len(RADIO_ELEMENT_LIST) -1)
+    #as the first track in the playlist we randomize the position
+
+
 
 def _playRadioStation():
-    global CURRENT_ELEMENT
+    global CURRENT_ELEMENT, Just_Tuned_In
     pos = pygame.mixer.music.get_pos()
     if int(pos) == -1:
         #if we reach the end of the list, wrap around and restart
         if(CURRENT_ELEMENT == len(RADIO_ELEMENT_LIST)):
             CURRENT_ELEMENT = 0
 
-        pygame.mixer.music.load(RADIO_ELEMENT_LIST[CURRENT_ELEMENT])
-        pygame.mixer.music.play()
-        CURRENT_ELEMENT += 1
+        if(Just_Tuned_In):
+            #if we just tuned in, we simulate the element having played a bit before joining
+            current_element_length = stringHelper.GetElementLength(RADIO_ELEMENT_LIST[CURRENT_ELEMENT])
+            start_position = stringHelper.RandomizeFloat(current_element_length)
+            pygame.mixer.music.load(RADIO_ELEMENT_LIST[CURRENT_ELEMENT])
+            pygame.mixer.music.play(0, start_position)
+            CURRENT_ELEMENT += 1
+            Just_Tuned_In = False
+        else:
+            pygame.mixer.music.load(RADIO_ELEMENT_LIST[CURRENT_ELEMENT])
+            pygame.mixer.music.play()
+            CURRENT_ELEMENT += 1
 
     #update track label
     if(CURRENT_ELEMENT == 0):
@@ -126,12 +138,13 @@ def _updateCurrentStation(newId):
     CURRENT_STATION = newId
 
 def _applyStationSettings(stationDir):
-    global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, CURRENT_ELEMENT
+    global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, CURRENT_ELEMENT, Just_Tuned_In
     settings = settingsHelper.GetSettings(stationDir)
     TracksSectionSize = settings[0]
     AdsSectionSize = settings[1]
     IncludeAdBreaks = settings[2]
     UpdateVolumeLabel(CURRENT_VOLUME)
+    Just_Tuned_In = True
 
 def VolumeUpEvent(event):
     VolumeUp()
@@ -158,7 +171,7 @@ def UpdateVolumeLabel(newVolumeValue):
 #we have to expect a full directory for this so string manipulation needed
 def UpdateRadioElementLabel(elementDir):
     elementName = basename(normpath(elementDir))
-    if (utilities.isDuplicate(elementDir)): elementName = elementName.split('(')[0]
+    if (stringHelper.isDuplicate(elementDir)): elementName = elementName.split('(')[0]
     if 'mp3' in elementName: elementName = os.path.splitext(elementName)[0]
     elementLabel['text'] = elementName
 
