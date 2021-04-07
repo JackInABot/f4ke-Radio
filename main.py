@@ -23,58 +23,62 @@ TracksSectionSize = 4 #How many tracks play until an ad break
 AdsSectionSize = 2 #How many ads play until return to tracks
 IncludeAdBreaks = True #if station includes ad breaks
 
-def ApplyStationSettings(stationDir):
-    global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, CURRENT_ELEMENT
-    settings = settingsHelper.GetSettings(stationDir)
-    TracksSectionSize = settings[0]
-    AdsSectionSize = settings[1]
-    IncludeAdBreaks = settings[2]
-    UpdateVolumeLabel(CURRENT_VOLUME)
-#Functions
-def init():
+# Functions
+def VolumeUp():
+    global CURRENT_VOLUME
+    if(CURRENT_VOLUME < 0.99):
+        CURRENT_VOLUME = CURRENT_VOLUME + 0.02
+        pygame.mixer.music.set_volume(CURRENT_VOLUME)
+        UpdateVolumeLabel(CURRENT_VOLUME)
+
+def VolumeDown():
+    global CURRENT_VOLUME
+    if(CURRENT_VOLUME > 0.01):
+        CURRENT_VOLUME = CURRENT_VOLUME - 0.02
+        pygame.mixer.music.set_volume(CURRENT_VOLUME)
+        UpdateVolumeLabel(CURRENT_VOLUME)
+
+def Init():
     #on startup we play the first station in the list
     UpdateStationLabel(STATIONS[CURRENT_STATION])
-    ApplyStationSettings(STATIONS[CURRENT_STATION])
-    _PlayStation(0)
-
-def NextStationEvent(event):
-    NextStation()
-
-def PreviousStationEvent(event):
-    PreviousStation()
+    _applyStationSettings(STATIONS[CURRENT_STATION])
+    _assembleRadioElements(0)
+    _playRadioStation()
 
 def NextStation():
     global CURRENT_STATION
-    next_station = CURRENT_STATION + 1
+    new_station_id = CURRENT_STATION + 1
     #check if last in list
     stations_len = len(STATIONS)
-    if next_station == stations_len:
-        next_station = 0 #wrap around to first
+    if new_station_id == stations_len:
+        new_station_id = 0 #wrap around to first
 
     #init the new station
-    _UpdateCurrentStation(next_station)
-    UpdateStationLabel(STATIONS[CURRENT_STATION])
-    _UnloadLastStation()
-    ApplyStationSettings(STATIONS[CURRENT_STATION])
-    _PlayStation(next_station)
+    _setupNewStation(new_station_id)
 
 def PreviousStation():
     global CURRENT_STATION
-    previous_station = CURRENT_STATION - 1
+    new_station_id = CURRENT_STATION - 1
     #check if last in list
     stations_len = len(STATIONS)
-    if previous_station == -1:
-        previous_station = stations_len - 1 #jump to end
+    if new_station_id == -1:
+        new_station_id = stations_len - 1 #jump to end
 
     #init the new station
-    _UpdateCurrentStation(previous_station)
-    UpdateStationLabel(STATIONS[CURRENT_STATION])
-    _UnloadLastStation()
-    ApplyStationSettings(STATIONS[CURRENT_STATION])
-    _PlayStation(previous_station)
+    _setupNewStation(new_station_id)
 
-#private methods
-def _PlayStation(stationId):
+########################################### Private Functions ###########################################
+def _setupNewStation(new_station_id):
+    _updateCurrentStation(new_station_id)
+    _unloadLastStation()
+    _applyStationSettings(STATIONS[new_station_id])
+
+    UpdateStationLabel(STATIONS[new_station_id])
+
+    _assembleRadioElements(new_station_id)
+    _playRadioStation()
+
+def _assembleRadioElements(stationId):
     global RADIO_ELEMENT_LIST, CURRENT_ELEMENT
     station_dir = os.path.join(directoryHelper.RADIO_STATIONS_FOLDER, STATIONS[stationId])
     scrambleList = True
@@ -90,8 +94,6 @@ def _PlayStation(stationId):
     RADIO_ELEMENT_LIST = utilities.MixRadioElements(station_tracks_list, station_ads_list, station_HostBeforeBreak_list, station_HostAfterBreak_list, TracksSectionSize, AdsSectionSize, IncludeAdBreaks)
     #randomize where in the list we are
     CURRENT_ELEMENT = utilities.RandomizeNumber(len(RADIO_ELEMENT_LIST) -1)
-
-    _playRadioStation()
 
 def _playRadioStation():
     global CURRENT_ELEMENT
@@ -113,42 +115,32 @@ def _playRadioStation():
 
     root.after(200, _playRadioStation)
 
-def debug():
-    UpdateRadioElementLabel(RADIO_ELEMENT_LIST[CURRENT_ELEMENT] + 1)
-
-def _UnloadLastStation():
+def _unloadLastStation():
     global RADIO_ELEMENT_LIST, CURRENT_ELEMENT
     RADIO_ELEMENT_LIST = []
     CURRENT_ELEMENT = 0
     directoryHelper.stopRadioStationTracks()
 
-def _UpdateCurrentStation(newId):
+def _updateCurrentStation(newId):
     global CURRENT_STATION
     CURRENT_STATION = newId
 
-def GetCurrentElement():
-    global CURRENT_ELEMENT
-    return CURRENT_ELEMENT
+def _applyStationSettings(stationDir):
+    global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, CURRENT_ELEMENT
+    settings = settingsHelper.GetSettings(stationDir)
+    TracksSectionSize = settings[0]
+    AdsSectionSize = settings[1]
+    IncludeAdBreaks = settings[2]
+    UpdateVolumeLabel(CURRENT_VOLUME)
 
 def VolumeUpEvent(event):
     VolumeUp()
 def VolumeDownEvent(event):
     VolumeDown()
-
-def VolumeUp():
-    global CURRENT_VOLUME
-    if(CURRENT_VOLUME < 0.99):
-        CURRENT_VOLUME = CURRENT_VOLUME + 0.02
-        pygame.mixer.music.set_volume(CURRENT_VOLUME)
-        UpdateVolumeLabel(CURRENT_VOLUME)
-
-def VolumeDown():
-    global CURRENT_VOLUME
-    if(CURRENT_VOLUME > 0.01):
-        CURRENT_VOLUME = CURRENT_VOLUME - 0.02
-        pygame.mixer.music.set_volume(CURRENT_VOLUME)
-        UpdateVolumeLabel(CURRENT_VOLUME)
-
+def NextStationEvent(event):
+    NextStation()
+def PreviousStationEvent(event):
+    PreviousStation()
 def MouseWheelVolumeEvent(event):
     if event.num == 5 or event.delta == -120:
         VolumeDown()
@@ -206,5 +198,5 @@ volumeUpButton.pack(side=tk.BOTTOM)
 
 root.geometry("500x200")
 
-init()
+Init()
 root.mainloop()
