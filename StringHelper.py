@@ -2,6 +2,8 @@ import os
 import re
 import random
 from mutagen.mp3 import MP3
+from mutagen.wave import WAVE
+from mutagen.flac import FLAC
 
 import DirectoryHelper as directoryHelper
 
@@ -43,8 +45,18 @@ def isDuplicate(s):
     return bool(re.search(r'\(\d+\)', s))
 
 def GetElementLength(radioElement):
-    audio = MP3(radioElement)
-    return audio.info.length
+    filename, file_extension = os.path.splitext(radioElement)
+    if(file_extension == ".mp3"):
+        audio = MP3(radioElement)
+        return audio.info.length
+    if(file_extension == ".flac"):
+        audio = FLAC(radioElement)
+        return audio.info.length
+    if(file_extension == ".wav"):
+        audio = WAVE(radioElement)
+        return audio.info.length
+    #unsupported format
+    return 0
 
 def MixRadioElements(tracks, ads, hostBeforeBreak, hostAfterBreak, TracksSectionSize, AdsSectionSize, IncludeAdBreaks):
     #VARS

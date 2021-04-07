@@ -94,8 +94,6 @@ def _assembleRadioElements(stationId):
     RADIO_ELEMENT_LIST = stringHelper.MixRadioElements(station_tracks_list, station_ads_list, station_HostBeforeBreak_list, station_HostAfterBreak_list, TracksSectionSize, AdsSectionSize, IncludeAdBreaks)
     #randomize where in the list we are
     CURRENT_ELEMENT = stringHelper.RandomizeNumber(len(RADIO_ELEMENT_LIST) -1)
-    #as the first track in the playlist we randomize the position
-
 
 
 def _playRadioStation():
@@ -172,7 +170,7 @@ def UpdateVolumeLabel(newVolumeValue):
 def UpdateRadioElementLabel(elementDir):
     elementName = basename(normpath(elementDir))
     if (stringHelper.isDuplicate(elementDir)): elementName = elementName.split('(')[0]
-    if 'mp3' in elementName: elementName = os.path.splitext(elementName)[0]
+    if 'mp3' in elementName or 'flac' in elementName or 'wav' in elementName: elementName = os.path.splitext(elementName)[0]
     elementLabel['text'] = elementName
 
 # MAIN LOOP
