@@ -19,8 +19,8 @@ CURRENT_STATION = 0
 CURRENT_VOLUME = 0.7 #70% volume default
 Just_Tuned_In = True
 
-TracksSectionSize = 4 #How many tracks play until an ad break
-AdsSectionSize = 2 #How many ads play until return to tracks
+TracksSectionSize = 0 #How many tracks play until an ad break
+AdsSectionSize = 0 #How many ads play until return to tracks
 IncludeAdBreaks = True #if station includes ad breaks
 
 # Functions
@@ -136,11 +136,11 @@ def _updateCurrentStation(newId):
     CURRENT_STATION = newId
 
 def _applyStationSettings(stationDir):
-    global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, CURRENT_ELEMENT, Just_Tuned_In
+    global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, Just_Tuned_In
     settings = settingsHelper.GetSettings(stationDir)
-    TracksSectionSize = settings[0]
-    AdsSectionSize = settings[1]
-    IncludeAdBreaks = settings[2]
+    TracksSectionSize = settings['TracksSectionSize']
+    AdsSectionSize = settings['AdsSectionSize']
+    IncludeAdBreaks = settings['IncludeAdBreaks']
     UpdateVolumeLabel(CURRENT_VOLUME)
     Just_Tuned_In = True
 
