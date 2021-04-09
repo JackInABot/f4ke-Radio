@@ -62,24 +62,13 @@ Click the `Volume ▲` or `Volume ▼` buttons on the UI to change the volume by
 
 
 ### Creating a new radio station  
-
-  
-
-Go to the `RADIO_STATIONS` directory and make a new folder. The name of the folders in the `RADIO_STATIONS` directory are the names of the radio stations.  
-
-  
+Go to the `RADIO_STATIONS` directory and make a new folder. The name of the folders in the `RADIO_STATIONS` directory are the names of the radio stations.
 
 All radio station folders inside `RADIO_STATIONS` directory must have the following inside them:  
 
-  
-
 - Folder named `HostAfterBreak`  
-
 - Folder named `HostBeforeBreak`  
-
 - Folder named `Tracks`  
-
-  
 
 The folders `HostAfterBreak`,`HostBeforeBreak`can be blank.  
 
@@ -88,21 +77,12 @@ The folder `Tracks` needs at least 1 audio file inside.
 More information can be found on the Wiki 
 
 ### Deleting a radio station 
-
 Just delete the folder inside `RADIO_STATIONS` that you don't want any more or I guess you could just move that folder elsewhere if you're too scared to delete it. 
 
- 
-
 ### Editing a radio station 
+Drop music into the `Tracks` folder. If you have duplicate names for the files add a number in brackets e.g. `example.mp3 (1) example.mp3 (2)` and the radio will know to take that part away when displaying the tracks in the UI.
 
-Drop music into the `Tracks` folder. If you have duplicate names for the files add a number in brackets e.g. `example.mp3 (1) example.mp3 (2)` 
+Add audio you want to play before an ad break in the `HostBeforeBreak` folder. Just drop it right in there. 
+Add audio you want to play after an ad break in the `HostAfterBreak` folder. Just drop it right in there. 
 
- 
-
-Add audio you want to play before an ad break in the `HostBeforeBreak`. Just drop it right in there. 
-
-Add audio you want to play after an ad break in the `HostAfterBreak`. Just drop it right in there. 
-
- 
-
-There is more stuff like the cheats menu and settings that can be found on the Wiki 
+There is more stuff like explaining how to use the radio cheats menu, how to set up station-settings and how to make these radio stations sound as realistic as possible in the Wiki 
