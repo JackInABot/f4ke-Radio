@@ -2,6 +2,7 @@ import os
 from os.path import normpath, basename
 import pygame
 import tkinter as tk
+import webbrowser
 
 import DirectoryHelper as directoryHelper
 import SettingsHelper as settingsHelper
@@ -37,6 +38,22 @@ def VolumeDown():
         CURRENT_VOLUME = CURRENT_VOLUME - 0.02
         pygame.mixer.music.set_volume(CURRENT_VOLUME)
         UpdateVolumeLabel(CURRENT_VOLUME)
+
+def HyperjumpToReadMe():
+    webbrowser.open('https://github.com/JackInABot/f4ke-Radio#readme')
+
+def HyperjumpToWiki():
+    webbrowser.open('https://github.com/JackInABot/f4ke-Radio/wiki')
+
+def SkipForwardOneTrack():
+    directoryHelper.stopRadioStationTracks()
+    _playRadioStation()
+
+def SkipBackwardsOneTrack():
+    global CURRENT_ELEMENT
+    directoryHelper.stopRadioStationTracks()
+    CURRENT_ELEMENT -=2
+    _playRadioStation()
 
 def Init():
     #on startup we play the first station in the list
@@ -101,8 +118,9 @@ def _playRadioStation():
     pos = pygame.mixer.music.get_pos()
     if int(pos) == -1:
         #if we reach the end of the list, wrap around and restart
-        if(CURRENT_ELEMENT == len(RADIO_ELEMENT_LIST)):
-            CURRENT_ELEMENT = 0
+        if(CURRENT_ELEMENT == len(RADIO_ELEMENT_LIST)): CURRENT_ELEMENT = 0
+        #if user rewinds track on first element in list, we wrap to the end element
+        if(CURRENT_ELEMENT < 0): CURRENT_ELEMENT = len(RADIO_ELEMENT_LIST) - 1
 
         if(Just_Tuned_In):
             #if we just tuned in, we simulate the element having played a bit before joining
@@ -175,16 +193,18 @@ def UpdateRadioElementLabel(elementDir):
 
 # MAIN LOOP
 root = tk.Tk()
-
 frame = tk.Frame(root)
+
+#LABELS
 stub1 = tk.Label(root, text="")
 stub2 = tk.Label(root, text="")
 stationLabel = tk.Label(root, text="Station", font=("Impact", 30))
 elementLabel = tk.Label(root, text="Track", font=("Calibri", 11))
 volumeLevelLabel = tk.Label(root, text="Volume", font=("Calibri", 9))
 
-previousStationButton = tk.Button(root, text="Previous", command=PreviousStation, height = 5, width = 10, borderwidth = '4')
-nextStationButton = tk.Button(root, text="Next", command=NextStation, height = 5, width = 10, borderwidth = '4')
+#BUTTONS
+previousStationButton = tk.Button(root, text="⯇ Previous", command=PreviousStation, height = 5, width = 10, borderwidth = '4')
+nextStationButton = tk.Button(root, text="Next ⯈", command=NextStation, height = 5, width = 10, borderwidth = '4')
 volumeUpButton = tk.Button(root, text="Volume ▲", command=VolumeUp, height = 1, width = 10)
 volumeDownButton = tk.Button(root, text="Volume ▼", command=VolumeDown, height = 1, width = 10)
 
@@ -194,6 +214,22 @@ root.bind('<Up>', VolumeUpEvent)
 root.bind('<Down>', VolumeDownEvent)
 
 root.bind("<MouseWheel>", MouseWheelVolumeEvent)
+
+#MENU
+menuBar = tk.Menu(root)
+
+# Create a pull-down menu for file operations
+cheatMenu = tk.Menu(menuBar, tearoff = False)
+cheatMenu.add_command(label = "Forward 1 Track", command = SkipForwardOneTrack)
+cheatMenu.add_command(label = "Rewind 1 Track", command = SkipBackwardsOneTrack)
+menuBar.add_cascade(menu = cheatMenu, label = "Cheats")
+
+# Create a pull-down menu for help operations
+helpMenu = tk.Menu(menuBar, tearoff = False)
+helpMenu.add_command(label = "Go to Read Me", command = HyperjumpToReadMe)
+helpMenu.add_command(label = "Go to Wiki", command = HyperjumpToWiki)
+menuBar.add_cascade(menu = helpMenu, label = "Help")
+root.config(menu=menuBar)
 
 stub1.pack(side=tk.TOP)
 stationLabel.pack(side=tk.TOP)
