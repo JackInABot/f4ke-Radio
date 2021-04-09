@@ -58,17 +58,8 @@ Click the buttons `next` or `previous` on the UI to change station. This functio
 
   
 
-Click the `Volume ▲` or `Volume ▼` buttons on the UI to change the volume by a value of 0.2 each click. This functions is also bound to the `Up` and `Down` Arrow Keys.  
+Click the `Volume ▲` or `Volume ▼` buttons on the UI to change the volume by a value of 0.2 each click. These functions are also bound to the `Up` and `Down` Arrow Keys. And also by scrolling your mouse wheel (if you have one) up and down you can change the volume up and down.
 
-  
-
-  
-
-  
-
-  
-
-  
 
 ### Creating a new radio station  
 
