@@ -4,7 +4,7 @@
 
   
 
-This program is an mp3 player which is designed to allow the user to implement custom radio elements to make the audio seem likes it's a real radio show. It is highly modular and completely up to the user how realistic it sounds. With a simple directory-driven approach the user can just ad a folder with their own choice of mp3s and create a localised fake radio station. 
+This program is an mp3 player which is designed to allow the user to implement custom radio elements to make the audio seem like it's a real radio show. It is highly modular and completely up to the user how realistic it sounds. With a simple directory-driven approach the user can just ad a folder with their own choice of mp3s and create a localised fake radio station. 
 
   
 
