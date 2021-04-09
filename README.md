@@ -9,57 +9,28 @@ This program is an mp3 player which is designed to allow the user to implement c
   
 
 ## What's the point of it?  
-
-  
-
 This is to simulate a real radio device which tunes into radio stations but implemented locally. There are 24/7 radio’s on YouTube and they are typically very good, but I found myself spending a lot of time searching for the right one. I love the atmosphere, but don’t like the reliance of internet and when they shut down, I need to find a new one. This way I always have radio stations saved on my machine. Additionally I am also a music snob and so I wanted a solution that enabled me to create lots of these 24/7 radios with all the music that I love without losing the atmosphere of a nice relaxing 24/7 radio show.  
-
-  
 
 TLDR: It’s meant to be used as a tool to simulate a relaxing radio show playing in the background while you have your attention elsewhere. 
 
-  
-
 ## How do I use it?  
-
-  
-
 Okay, here’s a quick rundown.  
 
- More in-depth look into everything can be found on the Wiki. 
+More in-depth look into everything can be found on the [Wiki](https://github.com/JackInABot/f4ke-Radio/wiki). 
 
 ### Running the program  
-
-  
-
 RUN `main.py` just double click that $#!T 
 
 Create a shortcut if you want and place it on your desktop / taskbar 
 
-  
-
 #### Prerequisites:   
-
-  
-
 You must have at least one radio show in the `RADIO_STATIONS` directory.  
 
-  
-
 #### Changing stations  
-
-  
-
 Click the buttons `next` or `previous` on the UI to change station. This function is also bound the `Left` and `Right` Arrow Keys.  
 
-  
-
 #### Changing the volume  
-
-  
-
 Click the `Volume ▲` or `Volume ▼` buttons on the UI to change the volume by a value of 0.2 each click. These functions are also bound to the `Up` and `Down` Arrow Keys. And also by scrolling your mouse wheel (if you have one) up and down you can change the volume up and down.
-
 
 ### Creating a new radio station  
 Go to the `RADIO_STATIONS` directory and make a new folder. The name of the folders in the `RADIO_STATIONS` directory are the names of the radio stations.
@@ -74,7 +45,7 @@ The folders `HostAfterBreak`,`HostBeforeBreak`can be blank.
 
 The folder `Tracks` needs at least 1 audio file inside.  
 
-More information can be found on the Wiki 
+More information can be found on the [Wiki](https://github.com/JackInABot/f4ke-Radio/wiki)
 
 ### Deleting a radio station 
 Just delete the folder inside `RADIO_STATIONS` that you don't want any more or I guess you could just move that folder elsewhere if you're too scared to delete it. 
@@ -83,6 +54,7 @@ Just delete the folder inside `RADIO_STATIONS` that you don't want any more or I
 Drop music into the `Tracks` folder. If you have duplicate names for the files add a number in brackets e.g. `example.mp3 (1) example.mp3 (2)` and the radio will know to take that part away when displaying the tracks in the UI.
 
 Add audio you want to play before an ad break in the `HostBeforeBreak` folder. Just drop it right in there. 
+
 Add audio you want to play after an ad break in the `HostAfterBreak` folder. Just drop it right in there. 
 
-There is more stuff like explaining how to use the radio cheats menu, how to set up station-settings and how to make these radio stations sound as realistic as possible in the Wiki 
+There is more stuff like explaining how to use the radio cheats menu, how to set up station-settings and how to make these radio stations sound as realistic as possible in the  [Wiki](https://github.com/JackInABot/f4ke-Radio/wiki) 
