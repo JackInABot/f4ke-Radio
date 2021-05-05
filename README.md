@@ -1,17 +1,28 @@
 # F4ke Radio 
+A local MP3 player that simulates a radio
 
 ## What is it?  
-
-  
-
-This program is an mp3 player which is designed to allow the user to implement custom radio elements to make the audio seem like it's a real radio show. It is highly modular and completely up to the user how realistic it sounds. With a simple directory-driven approach the user can just ad a folder with their own choice of mp3s and create a localised fake radio station. 
-
-  
+This program is an mp3 player which is designed to allow the user to implement custom radio elements to make the audio seem like it's a real radio show. It is highly modular and completely up to the user how realistic it sounds. With a simple directory-driven approach the user can just ad a folder with their own choice of mp3s and create a localised fake radio station.
 
 ## What's the point of it?  
 This is to simulate a real radio device which tunes into radio stations but implemented locally. There are 24/7 radio’s on YouTube and they are typically very good, but I found myself spending a lot of time searching for the right one. I love the atmosphere, but don’t like the reliance of internet and when they shut down, I need to find a new one. This way I always have radio stations saved on my machine. Additionally I am also a music snob and so I wanted a solution that enabled me to create lots of these 24/7 radios with all the music that I love without losing the atmosphere of a nice relaxing 24/7 radio show.  
 
 TLDR: It’s meant to be used as a tool to simulate a relaxing radio show playing in the background while you have your attention elsewhere. 
+
+## Installation
+Download via git with:
+`git clone https://github.com/JackInABot/f4ke-Radio.git`
+
+you can also download the condensed files and extract into your desired directory
+
+## Running
+Only tested and run on Windows. Linux users are welcome to try and run this, if there are any issues I suspect if you are a linux user you're probably more than capable of fixing the linux speific issue yourself. I'll see if i can test it a least and _maybe_ add linux support in the future. No promeses though.
+
+You'll need to install Python 3 if you havnt already.
+after you've installed python 3 you'll need to install the following if you havnt already:
+- `pip3 install pygame`
+- `pip3 install mutagen.mp3`
+
 
 ## How do I use it?  
 Okay, here’s a quick rundown.  
