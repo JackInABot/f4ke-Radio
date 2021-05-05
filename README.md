@@ -27,8 +27,6 @@ after you've installed python 3 you'll need to install the following if you havn
 ## How do I use it?  
 Okay, here’s a quick rundown.  
 
-More in-depth look into everything can be found on the [Wiki](https://github.com/JackInABot/f4ke-Radio/wiki). 
-
 ### Running the program  
 RUN `main.py` just double click that $#!T 
 
