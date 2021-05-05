@@ -2,7 +2,7 @@
 A local MP3 player that simulates a radio
 
 ## What is it?  
-This program is an mp3 player which is designed to allow the user to implement custom radio elements to make the audio seem like it's a real radio show. It is highly modular and completely up to the user how realistic it sounds. With a simple directory-driven approach the user can just ad a folder with their own choice of mp3s and create a localised fake radio station.
+This program is an mp3 player which is designed to allow the user to implement custom radio elements to make the audio seem like it's a real radio show. It is highly modular and completely up to the user how realistic it sounds. With a simple directory-driven approach the user can just add a folder with their own choice of mp3s and create a localised fake radio station.
 
 ## What's the point of it?  
 This is to simulate a real radio device which tunes into radio stations but implemented locally. There are 24/7 radio’s on YouTube and they are typically very good, but I found myself spending a lot of time searching for the right one. I love the atmosphere, but don’t like the reliance of internet and when they shut down, I need to find a new one. This way I always have radio stations saved on my machine. Additionally I am also a music snob and so I wanted a solution that enabled me to create lots of these 24/7 radios with all the music that I love without losing the atmosphere of a nice relaxing 24/7 radio show.  
