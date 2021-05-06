@@ -26,6 +26,9 @@ def GetGlobalRadioSettings():
 
             try: globalSettings['RadioStationsDirectory'] = obj['RadioStationsDirectory']
             except: _setDefaultRadioStationsFolder(globalSettings)
+    else: #else, if file doesnt exist..
+        _setDefaultRadioVolumeValue(globalSettings)
+        _setDefaultRadioStationsFolder(globalSettings)
 
     return globalSettings
 
@@ -52,7 +55,7 @@ def GetStationSettings(radioStationsDir, stationFolder):
 
             try: stationSettings['IncludeAdBreaks'] = obj['IncludeAdBreaks']
             except: _setDefaultIncludeAdBreaks(stationSettings)
-    else:
+    else: #else, if file doesnt exist..
         _setDefaultTracksSectionSize(stationSettings)
         _setDefaultAdsSectionSize(stationSettings)
         _setDefaultIncludeAdBreaks(stationSettings)
