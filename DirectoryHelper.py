@@ -6,8 +6,9 @@ from os import listdir
 from os.path import isdir, isfile, join
 
 #CONSTANTS
-RADIO_STATIONS_FOLDER = "RADIO_STATIONS"
 RADIO_ADVERTS_FOLDER = "ADVERTS"
+GLOBAL_RADIO_SETTINGS = "global-radio-settings.json"
+
 STATION_TRACKS_FOLDER = "Tracks"
 STATION_ADS_FOLDER = "Ads"
 STATION_HOST_BEFORE_BREAK_FOLDER = "HostBeforeBreak"

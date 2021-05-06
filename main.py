@@ -13,13 +13,17 @@ pygame.init() #turn all of pygame on.
 os.getcwd()
 
 #VARS
-STATIONS = directoryHelper.getRadioStations(directoryHelper.RADIO_STATIONS_FOLDER)
+STATIONS = []
 RADIO_ELEMENT_LIST = []
 CURRENT_ELEMENT = 0
 CURRENT_STATION = 0
-CURRENT_VOLUME = 0.7 #70% volume default
 Just_Tuned_In = True
 
+#SETTINGS VARS (these can be edited to suit user preference using <prefix>-settings.json files)
+#global-radio-settings
+CURRENT_VOLUME = 0 #Volume of the radio
+RADIO_STATIONS_DIR = "" #Directory
+#station-settings
 TracksSectionSize = 0 #How many tracks play until an ad break
 AdsSectionSize = 0 #How many ads play until return to tracks
 IncludeAdBreaks = True #if station includes ad breaks
@@ -56,6 +60,11 @@ def SkipBackwardsOneTrack():
     _playRadioStation()
 
 def Init():
+    global STATIONS
+    #on init, load the global settings
+    _applyGlobalRadioSettings()
+    #set the radio list
+    STATIONS = directoryHelper.getRadioStations(RADIO_STATIONS_DIR)
     #on startup we play the first station in the list
     UpdateStationLabel(STATIONS[CURRENT_STATION])
     _applyStationSettings(STATIONS[CURRENT_STATION])
@@ -97,7 +106,7 @@ def _setupNewStation(new_station_id):
 
 def _assembleRadioElements(stationId):
     global RADIO_ELEMENT_LIST, CURRENT_ELEMENT
-    station_dir = os.path.join(directoryHelper.RADIO_STATIONS_FOLDER, STATIONS[stationId])
+    station_dir = os.path.join(RADIO_STATIONS_DIR, STATIONS[stationId])
     scrambleList = True
     #get and assemble track paths
     station_tracks_list = stringHelper.AssembleRadioElements(station_dir, directoryHelper.STATION_TRACKS_FOLDER, scrambleList)
@@ -155,12 +164,18 @@ def _updateCurrentStation(newId):
 
 def _applyStationSettings(stationDir):
     global TracksSectionSize, AdsSectionSize, IncludeAdBreaks, Just_Tuned_In
-    settings = settingsHelper.GetSettings(stationDir)
+    settings = settingsHelper.GetStationSettings(RADIO_STATIONS_DIR, stationDir)
     TracksSectionSize = settings['TracksSectionSize']
     AdsSectionSize = settings['AdsSectionSize']
     IncludeAdBreaks = settings['IncludeAdBreaks']
     UpdateVolumeLabel(CURRENT_VOLUME)
     Just_Tuned_In = True
+
+def _applyGlobalRadioSettings():
+    global CURRENT_VOLUME, RADIO_STATIONS_DIR
+    settings = settingsHelper.GetGlobalRadioSettings()
+    CURRENT_VOLUME = settings['RadioVolumeStartValue']
+    RADIO_STATIONS_DIR = settings['RadioStationsDirectory']
 
 def VolumeUpEvent(event):
     VolumeUp()
