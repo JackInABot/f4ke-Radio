@@ -7,6 +7,20 @@ from mutagen.flac import FLAC
 
 import DirectoryHelper as directoryHelper
 
+def GetFrequencyFromStationString(stationString):
+    if("¬" in stationString):
+        result = stationString.split("¬")
+        return  result[0]
+    #there is not frequency so the label will be blank
+    return ""
+
+def GetStationNameFromStationString(stationString):
+    if("¬" in stationString):
+        result = stationString.split("¬")
+        return  result[1]
+    #there is not frequency so the whole string is the name
+    return stationString
+
 def RandomizeNumber(maxValue):
     return random.randint(0, maxValue)
 

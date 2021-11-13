@@ -193,7 +193,8 @@ def MouseWheelVolumeEvent(event):
 
 ########################################### UI STUFF ###########################################
 def UpdateStationLabel(newStationValue):
-    stationLabel['text'] = newStationValue
+    stationLabel['text'] = stringHelper.GetStationNameFromStationString(newStationValue)
+    frequencyLabel['text'] = stringHelper.GetFrequencyFromStationString(newStationValue)
 
 def UpdateVolumeLabel(newVolumeValue):
     percentageValue = "{:.0%}".format(newVolumeValue)
@@ -212,7 +213,7 @@ frame = tk.Frame(root)
 
 #LABELS
 stub1 = tk.Label(root, text="")
-stub2 = tk.Label(root, text="")
+frequencyLabel = tk.Label(root, text="frequency", font=("Calibri", 11))
 stationLabel = tk.Label(root, text="Station", font=("Impact", 30))
 elementLabel = tk.Label(root, text="Track", font=("Calibri", 11))
 volumeLevelLabel = tk.Label(root, text="Volume", font=("Calibri", 9))
@@ -247,8 +248,9 @@ menuBar.add_cascade(menu = helpMenu, label = "Help")
 root.config(menu=menuBar)
 
 stub1.pack(side=tk.TOP)
+
 stationLabel.pack(side=tk.TOP)
-stub2.pack(side=tk.TOP)
+frequencyLabel.pack(side=tk.TOP)
 elementLabel.pack(side=tk.TOP)
 
 previousStationButton.pack(side=tk.LEFT)
